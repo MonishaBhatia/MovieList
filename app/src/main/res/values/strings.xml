@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MovieFinder</string>
+    <string name="btn_submit">Submit</string>
+
+    <!-- Activity Labels -->
+    <string name="label_title">Title</string>
+    <string name="label_genre">Genre : </string>
+    <string name="label_released_date">Released Date :</string>
+    <string name="label_plot">Plot :</string>
+    <string name="label_rating">Rating</string>
+
+
+    <!-- Error Messages -->
+    <string name="no_name_error">Enter Movie or Series Name</string>
+    <string name="no_type_error">Select a Type: Movie/Series</string>
+    <string name="not_found_error">Movie/Series Not Found</string>
+    <string name="error_message">Oops! Something went Wrong.</string>
+
+</resources>
