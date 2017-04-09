@@ -22,12 +22,13 @@ public class HomeService implements WebServiceResponseListener {
     String url;
     Gson gson;
     boolean flag;
+    HomeView view;
 
 
+    public void callback(HomeView view, String name, String type){
 
-    public void callback(String name, String type){
+        this.view = view;
         url = ApiEndPoint.BASE_URL + name + "&type=" + type;
-
         new HomeAsyncTask(this, url, ApiEndPoint.BASE_URL_ID).execute();
 
     }
@@ -37,23 +38,20 @@ public class HomeService implements WebServiceResponseListener {
 
         gson = new Gson();
         Log.d("##Response", strresponse);
-        Log.d("called","1st");
 
         try {
             JSONObject jsonResultObject = new JSONObject(strresponse);
 
             if (jsonResultObject.getString("Response").equalsIgnoreCase("False")) {
 
-
-                setFlag(false);
+                view.showError(R.string.not_found_error);
 
             }else {
 
-
-                setFlag(true);
+                view.startDetailActivity(strresponse);
             }
         }catch (JSONException | NullPointerException e) {
-            Log.d("Error in ReviewReason:", e.getMessage());
+            Log.d("Error in HomeService:", e.getMessage());
         }
 
     }
@@ -68,15 +66,7 @@ public class HomeService implements WebServiceResponseListener {
 
     }
 
-
-
-    public void setFlag(boolean flag) {
-        Log.d("called","2nd");
-        this.flag = flag;
-    }
-
-    public boolean isFlag() {
-        Log.d("called","3rd");
+    public boolean isFlag(){
         return flag;
     }
 }

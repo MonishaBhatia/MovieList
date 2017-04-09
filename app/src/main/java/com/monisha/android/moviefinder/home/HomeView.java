@@ -14,7 +14,7 @@ public interface HomeView {
 
     void showNoTypeError(int noTypeError);
 
-    void startDetailActivity();
+    void startDetailActivity(String response);
 
     void showError(int resId);
 }

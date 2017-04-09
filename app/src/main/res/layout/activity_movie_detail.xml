@@ -9,11 +9,13 @@
     tools:context="com.monisha.android.moviefinder.details.DetailActivity">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_movie_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_10dp"/>
 
     <TextView
+        android:id="@+id/tv_multiple_movie_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

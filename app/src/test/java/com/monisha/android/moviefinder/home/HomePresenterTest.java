@@ -55,18 +55,18 @@ public class HomePresenterTest {
     public void shouldShowErrorWhenMovieOrSeriesIsValid() throws Exception {
         when(view.getMovieOrSeriesName()).thenReturn("Friends");
         when(view.getMovieOrSeriesType()).thenReturn("Series");
-        service.callback("Friends", "Series");
+        service.callback(view, "Friends", "Series");
         when(service.isFlag()).thenReturn(true);
         presenter.onSubmitClicked();
 
-        verify(view).startDetailActivity();
+        verify(view).startDetailActivity("response");
     }
 
     @Test
     public void shouldShowErrorWhenMovieOrSeriesIsInvalid() throws Exception {
         when(view.getMovieOrSeriesName()).thenReturn("Friends");
         when(view.getMovieOrSeriesType()).thenReturn("Series");
-        service.callback("Friends", "series");
+        service.callback(view, "Friends", "series");
         when(service.isFlag()).thenReturn(false);
         presenter.onSubmitClicked();
         verify(view).showError(R.string.not_found_error);

@@ -1,4 +1,4 @@
-package com.monisha.android.moviefinder.details;
+package com.monisha.android.moviefinder.gsonmodels;
 
 import java.util.List;
 

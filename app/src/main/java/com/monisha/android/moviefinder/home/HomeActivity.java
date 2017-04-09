@@ -54,7 +54,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
         presenter = new HomePresenter(this, new HomeService());
-        etName.setText("inception");
 
     }
 
@@ -96,9 +95,11 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     }
 
     @Override
-    public void startDetailActivity() {
+    public void startDetailActivity(String response) {
 
         Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra(Constants.RESPONSE, response);
+        intent.putExtra(Constants.TYPE, getMovieOrSeriesType());
         startActivity(intent);
     }
 
