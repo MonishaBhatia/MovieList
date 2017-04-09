@@ -1,10 +1,12 @@
 package com.monisha.android.moviefinder.home;
 
+import java.util.List;
+
 /**
  * Created by monisha on 08/04/17.
  */
 
-public interface HomeView {
+public interface HomeViewInterface {
 
     String getMovieOrSeriesName();
 
@@ -14,7 +16,7 @@ public interface HomeView {
 
     void showNoTypeError(int noTypeError);
 
-    void startDetailActivity(String response);
+    void startDetailActivity(List<String> response);
 
-    void showError(int resId);
+    void showNotFoundError(int resId);
 }

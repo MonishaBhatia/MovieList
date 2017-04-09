@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -28,7 +29,7 @@ public class DetailActivity extends AppCompatActivity {
 
 
     Gson gson ;
-    private String strResponse;
+    private List<String> strResponseList;
     private String type;
 
     List<DetailModel> detailModelList = new ArrayList<>();
@@ -52,10 +53,16 @@ public class DetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         gson = new Gson();
-        strResponse = getIntent().getStringExtra(Constants.RESPONSE);
+        strResponseList = getIntent().getStringArrayListExtra(Constants.RESPONSE);
         type = getIntent().getStringExtra(Constants.TYPE);
 
         parseJsonAndUpdateList();
+
+        if(strResponseList.size()>1){
+            tvMultipleMovieText.setVisibility(View.GONE);
+        }else {
+            tvMultipleMovieText.setVisibility(View.VISIBLE);
+        }
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -66,32 +73,35 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    public void parseJsonAndUpdateList(){
-
-        if(type.equals(Constants.MOVIE)){
-
-            movieDetailModel = gson.fromJson(strResponse, MovieDetailModel.class);
-            title = movieDetailModel.getTitle();
-            genre = movieDetailModel.getGenre();
-            releasedDate = movieDetailModel.getReleased();
-            plot = movieDetailModel.getPlot();
-            rating = movieDetailModel.getImdbRating();
-            image = movieDetailModel.getPoster();
+    public void parseJsonAndUpdateList() {
 
 
-        }else{
-            seriesDetailModel = gson.fromJson(strResponse, SeriesDetailModel.class);
+        for (String strResponse : strResponseList) {
+            if (type.equals(Constants.MOVIE)) {
 
-            title = seriesDetailModel.getTitle();
-            genre = seriesDetailModel.getGenre();
-            releasedDate = seriesDetailModel.getReleased();
-            plot = seriesDetailModel.getPlot();
-            rating = seriesDetailModel.getImdbRating();
-            image = seriesDetailModel.getPoster();
+                movieDetailModel = gson.fromJson(strResponse, MovieDetailModel.class);
+                title = movieDetailModel.getTitle();
+                genre = movieDetailModel.getGenre();
+                releasedDate = movieDetailModel.getReleased();
+                plot = movieDetailModel.getPlot();
+                rating = movieDetailModel.getImdbRating();
+                image = movieDetailModel.getPoster();
+
+
+            } else {
+                seriesDetailModel = gson.fromJson(strResponse, SeriesDetailModel.class);
+
+                title = seriesDetailModel.getTitle();
+                genre = seriesDetailModel.getGenre();
+                releasedDate = seriesDetailModel.getReleased();
+                plot = seriesDetailModel.getPlot();
+                rating = seriesDetailModel.getImdbRating();
+                image = seriesDetailModel.getPoster();
+
+            }
+
+            detailModelList.add(new DetailModel(title, genre, releasedDate, plot, rating, image));
 
         }
-
-        detailModelList.add(new DetailModel(title,genre,releasedDate,plot,rating,image));
-
     }
 }

@@ -1,17 +1,19 @@
 package com.monisha.android.moviefinder.home;
 
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.monisha.android.moviefinder.R;
 import com.monisha.android.moviefinder.api.ApiEndPoint;
-import com.monisha.android.moviefinder.interfaces.WebServiceResponseListener;
+import com.monisha.android.moviefinder.general.WebServiceAsyncTask;
+import com.monisha.android.moviefinder.general.WebServiceResponseListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by monisha on 08/04/17.
@@ -22,14 +24,21 @@ public class HomeService implements WebServiceResponseListener {
     String url;
     Gson gson;
     boolean flag;
-    HomeView view;
+    HomeViewInterface view;
+    int count;
+    List<String> responseList;
+    String[] movies;
 
-
-    public void callback(HomeView view, String name, String type){
+    public void callApiToFetchDetails(HomeViewInterface view, String mName, String type){
 
         this.view = view;
-        url = ApiEndPoint.BASE_URL + name + "&type=" + type;
-        new HomeAsyncTask(this, url, ApiEndPoint.BASE_URL_ID).execute();
+        movies = mName.split(",");
+        count = 0;
+        responseList = new ArrayList<>();
+        for(String name : movies) {
+            url = ApiEndPoint.BASE_URL + name + "&type=" + type;
+            new WebServiceAsyncTask(this, url, ApiEndPoint.BASE_URL_ID).execute();
+        }
 
     }
 
@@ -38,22 +47,28 @@ public class HomeService implements WebServiceResponseListener {
 
         gson = new Gson();
         Log.d("##Response", strresponse);
+        count++;
 
-        try {
-            JSONObject jsonResultObject = new JSONObject(strresponse);
+        if(urlId == ApiEndPoint.BASE_URL_ID) {
+            try {
+                JSONObject jsonResultObject = new JSONObject(strresponse);
 
-            if (jsonResultObject.getString("Response").equalsIgnoreCase("False")) {
+                if (jsonResultObject.getString("Response").equalsIgnoreCase("False")) {
 
-                view.showError(R.string.not_found_error);
+                    view.showNotFoundError(R.string.not_found_error);
 
-            }else {
+                } else {
 
-                view.startDetailActivity(strresponse);
+                    responseList.add(strresponse);
+                }
+            } catch (JSONException | NullPointerException e) {
+                Log.d("Error in HomeService:", e.getMessage());
             }
-        }catch (JSONException | NullPointerException e) {
-            Log.d("Error in HomeService:", e.getMessage());
-        }
 
+            if (count == movies.length) {
+                view.startDetailActivity(responseList);
+            }
+        }
     }
 
     @Override
@@ -67,6 +82,7 @@ public class HomeService implements WebServiceResponseListener {
     }
 
     public boolean isFlag(){
-        return flag;
+
+        return count == movies.length? true : false;
     }
 }

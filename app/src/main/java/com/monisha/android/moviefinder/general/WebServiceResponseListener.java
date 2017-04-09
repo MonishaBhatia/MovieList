@@ -1,4 +1,4 @@
-package com.monisha.android.moviefinder.interfaces;
+package com.monisha.android.moviefinder.general;
 
 /**
  * Created by monisha on 07/04/17.

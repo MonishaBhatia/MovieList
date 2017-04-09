@@ -9,6 +9,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -22,9 +25,11 @@ public class HomePresenterTest {
     @Mock
     private HomePresenter presenter;
     @Mock
-    private HomeView view;
+    private HomeViewInterface view;
     @Mock
     private HomeService service;
+
+    List<String> response = new ArrayList<>();
 
 
     @Before
@@ -55,21 +60,21 @@ public class HomePresenterTest {
     public void shouldShowErrorWhenMovieOrSeriesIsValid() throws Exception {
         when(view.getMovieOrSeriesName()).thenReturn("Friends");
         when(view.getMovieOrSeriesType()).thenReturn("Series");
-        service.callback(view, "Friends", "Series");
+        service.callApiToFetchDetails(view, "Friends", "Series");
         when(service.isFlag()).thenReturn(true);
         presenter.onSubmitClicked();
 
-        verify(view).startDetailActivity("response");
+        verify(view).startDetailActivity(response);
     }
 
     @Test
     public void shouldShowErrorWhenMovieOrSeriesIsInvalid() throws Exception {
         when(view.getMovieOrSeriesName()).thenReturn("Friends");
         when(view.getMovieOrSeriesType()).thenReturn("Series");
-        service.callback(view, "Friends", "series");
+        service.callApiToFetchDetails(view, "Friends", "series");
         when(service.isFlag()).thenReturn(false);
         presenter.onSubmitClicked();
-        verify(view).showError(R.string.not_found_error);
+        verify(view).showNotFoundError(R.string.not_found_error);
     }
 
 }

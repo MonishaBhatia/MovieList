@@ -1,9 +1,9 @@
-package com.monisha.android.moviefinder.home;
+package com.monisha.android.moviefinder.general;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.monisha.android.moviefinder.interfaces.WebServiceResponseListener;
+import com.monisha.android.moviefinder.general.WebServiceResponseListener;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import okhttp3.Response;
  * Created by monisha on 08/04/17.
  */
 
-public class HomeAsyncTask extends AsyncTask<String, String, String> {
+public class WebServiceAsyncTask extends AsyncTask<String, String, String> {
 
     /*
      * Listener to catch and parse response
@@ -24,7 +24,7 @@ public class HomeAsyncTask extends AsyncTask<String, String, String> {
     String url;
     int urlId;
 
-    HomeAsyncTask(WebServiceResponseListener mListener, String url, int urlId){
+    WebServiceAsyncTask(WebServiceResponseListener mListener, String url, int urlId){
         this.mListener = mListener;
         this.url = url;
         this.urlId = urlId;
@@ -58,7 +58,6 @@ public class HomeAsyncTask extends AsyncTask<String, String, String> {
 
         } catch (Exception e) {
             e.printStackTrace();
-
             //mListener.onError();
         }
 
