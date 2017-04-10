@@ -56,14 +56,13 @@ public class DetailActivity extends AppCompatActivity {
         strResponseList = getIntent().getStringArrayListExtra(Constants.RESPONSE);
         type = getIntent().getStringExtra(Constants.TYPE);
 
-        parseJsonAndUpdateList();
-
         if(strResponseList.size()>1){
             tvMultipleMovieText.setVisibility(View.GONE);
         }else {
             tvMultipleMovieText.setVisibility(View.VISIBLE);
         }
 
+        parseJsonAndUpdateList();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvMovieList.setLayoutManager(layoutManager);

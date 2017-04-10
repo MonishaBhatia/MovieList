@@ -24,7 +24,7 @@ public class WebServiceAsyncTask extends AsyncTask<String, String, String> {
     String url;
     int urlId;
 
-    WebServiceAsyncTask(WebServiceResponseListener mListener, String url, int urlId){
+    public WebServiceAsyncTask(WebServiceResponseListener mListener, String url, int urlId){
         this.mListener = mListener;
         this.url = url;
         this.urlId = urlId;
