@@ -7,7 +7,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.monisha.android.moviefinder.R;
 import com.monisha.android.moviefinder.api.ApiEndPoint;
 
@@ -24,27 +23,26 @@ import java.util.List;
 public class HomeService {
 
     String url;
-    Gson gson;
-    boolean flag;
     HomeViewInterface view;
     int count;
     List<String> responseList;
     String[] movies;
 
-    public void callApiToFetchDetails(HomeViewInterface view, String mName, String type){
+    public void callApiToFetchDetails(HomeViewInterface view, String mName, String type) {
 
         this.view = view;
         movies = mName.split(",");
         count = 0;
         view.showProgressDialog();
         responseList = new ArrayList<>();
-        for(String name : movies) {
+        for (String name : movies) {
             url = ApiEndPoint.BASE_URL + name + "&type=" + type;
-            sendRequest();
+            sendRequest(url);
         }
     }
 
-    private void sendRequest(){
+    //Send request to volley for fetching data on server
+    private void sendRequest(String url) {
 
         StringRequest stringRequest = new StringRequest(url,
                 new Response.Listener<String>() {
@@ -64,36 +62,36 @@ public class HomeService {
         requestQueue.add(stringRequest);
     }
 
-    private void showJSON(String strresponse){
+    //Get the JSON response
+    private void showJSON(String strresponse) {
 
-        gson = new Gson();
         Log.d("##Response", strresponse);
         count++;
 
 
-            try {
-                JSONObject jsonResultObject = new JSONObject(strresponse);
+        try {
+            JSONObject jsonResultObject = new JSONObject(strresponse);
 
-                if (jsonResultObject.getString("Response").equalsIgnoreCase("False")) {
+            if (jsonResultObject.getString("Response").equalsIgnoreCase("False")) {
 
-                    view.showNotFoundError(R.string.not_found_error);
+                view.showNotFoundError(R.string.not_found_error);
 
-                } else {
+            } else {
 
-                    responseList.add(strresponse);
-                }
-            } catch (JSONException | NullPointerException e) {
-                Log.d("Error in HomeService:", e.getMessage());
+                responseList.add(strresponse);
             }
+        } catch (JSONException | NullPointerException e) {
+            Log.d("Error in HomeService:", e.getMessage());
+        }
 
-            if (count == movies.length) {
-                view.startDetailActivity(responseList);
-            }
+        if (count == movies.length) {
+            view.startDetailActivity(responseList);
+        }
 
     }
 
-    public boolean isFlag(){
+    public boolean isFlag() {
 
-        return count == movies.length? true : false;
+        return count == movies.length ? true : false;
     }
 }
