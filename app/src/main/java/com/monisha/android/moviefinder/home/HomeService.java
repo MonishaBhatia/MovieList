@@ -76,17 +76,17 @@ public class HomeService {
             if (jsonResultObject.getString("Response").equalsIgnoreCase("False")) {
 
                 view.showNotFoundError(R.string.not_found_error);
+                view.dismissProgressDialog();
 
             } else {
 
                 responseList.add(strresponse);
+                if (count == movies.length) {
+                    view.startDetailActivity(responseList);
+                }
             }
         } catch (JSONException | NullPointerException e) {
             Log.d("Error in HomeService:", e.getMessage());
-        }
-
-        if (count == movies.length) {
-            view.startDetailActivity(responseList);
         }
 
     }
