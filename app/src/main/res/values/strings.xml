@@ -14,6 +14,7 @@
     <string name="no_name_error">Enter Movie or Series Name</string>
     <string name="no_type_error">Select a Type: Movie/Series</string>
     <string name="not_found_error">Movie/Series Not Found</string>
+    <string name="something_went_wrong_error">Oops! Something went wrong!</string>
     <string name="error_message">Oops! Something went Wrong.</string>
 
 </resources>

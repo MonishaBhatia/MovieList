@@ -54,7 +54,8 @@ public class HomeService {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        view.showNotFoundError(R.string.not_found_error);
+                        view.showNotFoundError(R.string.something_went_wrong_error);
+                        view.dismissProgressDialog();
                     }
                 });
 
