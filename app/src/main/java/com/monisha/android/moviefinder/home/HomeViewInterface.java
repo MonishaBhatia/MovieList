@@ -1,5 +1,8 @@
 package com.monisha.android.moviefinder.home;
 
+import android.content.Context;
+import android.widget.ProgressBar;
+
 import java.util.List;
 
 /**
@@ -19,4 +22,10 @@ public interface HomeViewInterface {
     void startDetailActivity(List<String> response);
 
     void showNotFoundError(int resId);
+
+    void dismissProgressDialog();
+
+    void showProgressDialog();
+
+    Context getContext();
 }

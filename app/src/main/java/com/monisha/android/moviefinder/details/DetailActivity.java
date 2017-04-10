@@ -52,6 +52,12 @@ public class DetailActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         gson = new Gson();
         strResponseList = getIntent().getStringArrayListExtra(Constants.RESPONSE);
         type = getIntent().getStringExtra(Constants.TYPE);
@@ -62,8 +68,10 @@ public class DetailActivity extends AppCompatActivity {
             tvMultipleMovieText.setVisibility(View.VISIBLE);
         }
 
+        //Method to parse json response and save in a list
         parseJsonAndUpdateList();
 
+        //RecyclerView Adapter
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvMovieList.setLayoutManager(layoutManager);
 

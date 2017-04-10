@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_12dp"
+    android:orientation="vertical"
     tools:context="com.monisha.android.moviefinder.home.HomeActivity">
+
+<ScrollView
+    android:id="@+id/content_frame_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_margin="@dimen/margin_12dp"
         android:layout_gravity="center">
 
     <android.support.design.widget.TextInputLayout
@@ -49,3 +56,77 @@
     </LinearLayout>
 
     </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            android:indeterminate="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/view_no_connection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:clickable="true"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/no_connection_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_8dp"
+            android:scaleType="centerInside"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_not_interested_black_24dp" />
+
+        <TextView
+            android:id="@+id/no_connection_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Connection lost!"
+            android:textColor="@color/secondary_text"
+            android:textSize="@dimen/font_16sp" />
+
+        <TextView
+            android:id="@+id/no_connection_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:layout_marginBottom="@dimen/margin_12dp"
+            android:gravity="center"
+            android:text="Please check your Internet settings"
+            android:textColor="@color/secondary_text"
+            android:textSize="17sp" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/no_connection_button"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/margin_12dp"
+            android:layout_gravity="center"
+            android:text="RETRY"
+            android:background="@color/colorAccent"
+            android:textSize="18dp"
+            android:letterSpacing="0.1"
+            android:visibility="visible"
+            android:textColor="@color/primary_text" />
+
+    </LinearLayout>
+</FrameLayout>

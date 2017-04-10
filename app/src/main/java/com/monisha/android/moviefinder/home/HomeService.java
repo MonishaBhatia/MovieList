@@ -2,12 +2,14 @@ package com.monisha.android.moviefinder.home;
 
 import android.util.Log;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.monisha.android.moviefinder.R;
 import com.monisha.android.moviefinder.api.ApiEndPoint;
-import com.monisha.android.moviefinder.general.WebServiceAsyncTask;
-import com.monisha.android.moviefinder.general.WebServiceResponseListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +21,7 @@ import java.util.List;
  * Created by monisha on 08/04/17.
  */
 
-public class HomeService implements WebServiceResponseListener {
+public class HomeService {
 
     String url;
     Gson gson;
@@ -34,22 +36,41 @@ public class HomeService implements WebServiceResponseListener {
         this.view = view;
         movies = mName.split(",");
         count = 0;
+        view.showProgressDialog();
         responseList = new ArrayList<>();
         for(String name : movies) {
             url = ApiEndPoint.BASE_URL + name + "&type=" + type;
-            new WebServiceAsyncTask(this, url, ApiEndPoint.BASE_URL_ID).execute();
+            sendRequest();
         }
-
     }
 
-    @Override
-    public void responseWithId(String strresponse, String via, int urlId) throws JsonSyntaxException, NullPointerException {
+    private void sendRequest(){
+
+        StringRequest stringRequest = new StringRequest(url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        showJSON(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        view.showNotFoundError(R.string.not_found_error);
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void showJSON(String strresponse){
 
         gson = new Gson();
         Log.d("##Response", strresponse);
         count++;
 
-        if(urlId == ApiEndPoint.BASE_URL_ID) {
+
             try {
                 JSONObject jsonResultObject = new JSONObject(strresponse);
 
@@ -68,16 +89,6 @@ public class HomeService implements WebServiceResponseListener {
             if (count == movies.length) {
                 view.startDetailActivity(responseList);
             }
-        }
-    }
-
-    @Override
-    public void onError() throws NullPointerException {
-
-    }
-
-    @Override
-    public void slowInternetConnction() throws NullPointerException {
 
     }
 

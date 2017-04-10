@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.monisha.android.moviefinder"
         minSdkVersion 14
@@ -31,8 +32,10 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:recyclerview-v7:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
-    testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-all:1.10.19"
     compile 'com.jakewharton:butterknife:8.5.1'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-all:1.10.19'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    compile 'com.mcxiaoke.volley:library-aar:1.0.0'
 }
