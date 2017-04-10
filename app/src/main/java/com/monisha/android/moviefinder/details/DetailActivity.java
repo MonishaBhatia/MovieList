@@ -107,6 +107,7 @@ public class DetailActivity extends AppCompatActivity {
 
             }
 
+
             detailModelList.add(new DetailModel(title, genre, releasedDate, plot, rating, image));
 
         }

@@ -1,7 +1,6 @@
 package com.monisha.android.moviefinder.home;
 
 import android.content.Context;
-import android.widget.ProgressBar;
 
 import java.util.List;
 
